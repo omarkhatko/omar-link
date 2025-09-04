@@ -145,7 +145,8 @@
     <div class="max-w-6xl mx-auto px-6 md:px-8 grid md:grid-cols-2 gap-8">
       <div>
         <h2 class="text-3xl font-semibold mb-6" id="contact-heading">Contact</h2>
-        <form id="contact-form" class="space-y-4">
+        <!-- Contact form posts data directly to a third‑party email service. -->
+        <form id="contact-form" class="space-y-4" action="https://formsubmit.co/omar@enlightenedminds.io" method="POST">
           <div>
             <label class="block mb-1" id="label-name"></label>
             <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:outline-none" required>
@@ -162,8 +163,12 @@
             <label class="block mb-1" id="label-role"></label>
             <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
           </div>
+          <!-- Hidden field to disable reCAPTCHA on the formservice -->
+          <input type="hidden" name="_captcha" value="false">
+          <!-- Optional redirect after submission -->
+          <input type="hidden" name="_next" value="https://omarkhatko.github.io/omar-link/#contact">
           <div class="mt-6">
-            <button type="submit" class="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-slate-100 transition" id="send-btn">Send</button>
+            <button type="submit" class="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-slate-100 transition" id="send-btn">Submit</button>
           </div>
         </form>
       </div>
@@ -247,7 +252,7 @@ const translations = {
     labelWhatsapp: 'WhatsApp',
     labelEmail: 'Email',
     labelMessage: 'Subject',
-    sendButton: 'Send',
+    sendButton: 'Submit',
     // contactDirectHeading removed as the heading is no longer displayed,
     footerText: '© ' + new Date().getFullYear() + ' Omar Khatko. All rights reserved.',
     modal: {
@@ -488,25 +493,8 @@ window.addEventListener('scroll', function() {
   }
 });
 
-// Handle contact form submission: send details via email only
-document.getElementById('contact-form').addEventListener('submit', function (e) {
-  e.preventDefault();
-  const form = e.target;
-  const inputs = form.querySelectorAll('input');
-  // Expect inputs in order: name, phone, email, subject
-  const name = inputs[0] ? inputs[0].value.trim() : '';
-  const phone = inputs[1] ? inputs[1].value.trim() : '';
-  const email = inputs[2] ? inputs[2].value.trim() : '';
-  const subjectInput = inputs[3] ? inputs[3].value.trim() : '';
-  let body = '';
-  if (name) body += 'Name: ' + name + '\n';
-  if (phone) body += 'Phone: ' + phone + '\n';
-  if (email) body += 'Email: ' + email + '\n';
-  if (subjectInput) body += '\nSubject: ' + subjectInput;
-  const subject = encodeURIComponent(subjectInput || 'Contact Request');
-  const mailtoLink = 'mailto:omar@enlightenedminds.io?subject=' + subject + '&body=' + encodeURIComponent(body);
-  window.location.href = mailtoLink;
-});
+// The form now posts directly to formsubmit.co via its action attribute, so no custom
+// submission handler is necessary here.  
 
 // Initialize default language
 applyTranslations(currentLang);
