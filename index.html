@@ -149,19 +149,20 @@
         <form id="contact-form" class="space-y-4" action="https://formsubmit.co/omar@enlightenedminds.io" method="POST">
           <div>
             <label class="block mb-1" id="label-name"></label>
-            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:outline-none" required>
+            <!-- Each input has a name attribute so FormSubmit can include the field values in the email -->
+            <input type="text" name="Name" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:outline-none" required>
           </div>
           <div>
             <label class="block mb-1" id="label-company"></label>
-            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
+            <input type="text" name="Phone" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
           </div>
           <div>
             <label class="block mb-1" id="label-email"></label>
-            <input type="email" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
+            <input type="email" name="Email" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
           </div>
           <div>
             <label class="block mb-1" id="label-role"></label>
-            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
+            <input type="text" name="Subject" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
           </div>
           <!-- Hidden field to disable reCAPTCHA on the formservice -->
           <input type="hidden" name="_captcha" value="false">
