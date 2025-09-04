@@ -159,10 +159,6 @@
             <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
           </div>
           <div>
-            <label class="block mb-1" id="label-whatsapp"></label>
-            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
-          </div>
-          <div>
             <label class="block mb-1" id="label-email"></label>
             <input type="email" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
           </div>
@@ -496,90 +492,29 @@ window.addEventListener('scroll', function() {
   }
 });
 
+// Handle contact form submission: send details via email only
+document.getElementById('contact-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const inputs = form.querySelectorAll('input');
+  const textarea = form.querySelector('textarea');
+  const name = inputs[0] ? inputs[0].value.trim() : '';
+  const company = inputs[1] ? inputs[1].value.trim() : '';
+  const role = inputs[2] ? inputs[2].value.trim() : '';
+  const email = inputs.length > 3 ? inputs[3].value.trim() : '';
+  const message = textarea ? textarea.value.trim() : '';
+  let body = '';
+  if (name) body += 'Name: ' + name + '\n';
+  if (company) body += 'Company: ' + company + '\n';
+  if (role) body += 'Role: ' + role + '\n';
+  if (email) body += 'Email: ' + email + '\n';
+  if (message) body += '\n' + message;
+  const mailtoLink = 'mailto:omar@enlightenedminds.io?subject=New%20Application&body=' + encodeURIComponent(body);
+  window.location.href = mailtoLink;
+});
+
 // Initialize default language
 applyTranslations(currentLang);
 </script>
-
-  <!-- Contact Section -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2>Contact</h2>
-      <form id="contact-form">
-        <div class="form-row">
-          <input type="text" name="name" placeholder="Your name" required />
-          <input type="email" name="email" placeholder="Email" required />
-        </div>
-        <textarea name="message" placeholder="Your message" rows="5" required></textarea>
-
-        <!-- WhatsApp number -->
-        <input type="hidden" id="waPhone" value="971552287259" />
-
-        <!-- Formspree endpoint -->
-        <input type="hidden" id="formEndpoint" value="" />
-
-        <button type="submit">Send</button>
-        <p id="form-status" style="margin-top:10px;"></p>
-      </form>
-
-      <div style="margin-top:12px;">
-        <a id="waDirect" href="#" target="_blank" rel="noopener">Message on WhatsApp</a>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    (function(){
-      const form = document.getElementById('contact-form');
-      const statusEl = document.getElementById('form-status');
-      const waPhone = document.getElementById('waPhone').value.trim();
-      const endpoint = document.getElementById('formEndpoint').value.trim();
-      const waLink = document.getElementById('waDirect');
-
-      function buildWAText(name, email, message){
-        const t = 'Hi Omar, I came from your site.%0A' +
-                  'Name: ' + encodeURIComponent(name) + '%0A' +
-                  'Email: ' + encodeURIComponent(email) + '%0A' +
-                  'Message: ' + encodeURIComponent(message);
-        return 'https://wa.me/' + waPhone + '?text=' + t;
-      }
-
-      waLink.addEventListener('click', function(){
-        const fd = new FormData(form);
-        const wa = buildWAText(fd.get('name') || '', fd.get('email') || '', fd.get('message') || '');
-        this.href = wa;
-      });
-
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
-        statusEl.textContent = 'Sending...';
-        const fd = new FormData(form);
-        const name = fd.get('name'), email = fd.get('email'), message = fd.get('message');
-
-        // Open WhatsApp with filled message
-        const waURL = buildWAText(name, email, message);
-        window.open(waURL, '_blank', 'noopener');
-
-        // Send to Formspree if endpoint defined
-        if (endpoint) {
-          try {
-            const res = await fetch(endpoint, {
-              method: 'POST',
-              body: fd,
-              headers: { 'Accept': 'application/json' }
-            });
-            if (res.ok) {
-              statusEl.textContent = 'Отправлено! Я свяжусь с вами.';
-              form.reset();
-              return;
-            }
-          } catch(e) {}
-          statusEl.textContent = 'WhatsApp открыт. Email-отправка не удалась.';
-          return;
-        }
-
-        statusEl.textContent = 'WhatsApp открыт. Заявка отправлена.';
-      });
-    })();
-  </script>
- </body>
+</body>
 </html>
