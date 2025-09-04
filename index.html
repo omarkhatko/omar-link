@@ -246,8 +246,8 @@ const translations = {
     rahetButton: 'Learn More',
     contactHeading: 'Contact',
     labelName: 'Name',
-    labelCompany: 'Company',
-    labelRole: 'Role',
+    labelCompany: 'Phone',
+    labelRole: 'Subject',
     labelWhatsapp: 'WhatsApp',
     labelEmail: 'Email',
     labelMessage: 'What are you looking for in the circle?',
@@ -304,8 +304,8 @@ const translations = {
     rahetButton: 'Подробнее',
     contactHeading: 'Контакты',
     labelName: 'Имя',
-    labelCompany: 'Компания',
-    labelRole: 'Должность',
+    labelCompany: 'Номер телефона',
+    labelRole: 'Тема',
     labelWhatsapp: 'WhatsApp',
     labelEmail: 'Email',
     labelMessage: 'Что ищете в круге?',
@@ -362,8 +362,8 @@ const translations = {
     rahetButton: 'اعرف المزيد',
     contactHeading: 'تواصل',
     labelName: 'الاسم',
-    labelCompany: 'الشركة',
-    labelRole: 'الدور',
+    labelCompany: 'رقم الهاتف',
+    labelRole: 'الموضوع',
     labelWhatsapp: 'WhatsApp',
     labelEmail: 'البريد الإلكتروني',
     labelMessage: 'ما الذي تبحث عنه في الدائرة؟',
@@ -499,17 +499,20 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
   const inputs = form.querySelectorAll('input');
   const textarea = form.querySelector('textarea');
   const name = inputs[0] ? inputs[0].value.trim() : '';
-  const company = inputs[1] ? inputs[1].value.trim() : '';
-  const role = inputs[2] ? inputs[2].value.trim() : '';
+  // Second input is now phone number
+  const phone = inputs[1] ? inputs[1].value.trim() : '';
+  // Third input is now subject
+  const subjectField = inputs[2] ? inputs[2].value.trim() : '';
   const email = inputs.length > 3 ? inputs[3].value.trim() : '';
   const message = textarea ? textarea.value.trim() : '';
   let body = '';
   if (name) body += 'Name: ' + name + '\n';
-  if (company) body += 'Company: ' + company + '\n';
-  if (role) body += 'Role: ' + role + '\n';
+  if (phone) body += 'Phone: ' + phone + '\n';
   if (email) body += 'Email: ' + email + '\n';
   if (message) body += '\n' + message;
-  const mailtoLink = 'mailto:omar@enlightenedminds.io?subject=New%20Application&body=' + encodeURIComponent(body);
+  // Use subject field as email subject if provided, otherwise default
+  const subject = subjectField ? encodeURIComponent(subjectField) : 'New%20Application';
+  const mailtoLink = 'mailto:omar@enlightenedminds.io?subject=' + subject + '&body=' + encodeURIComponent(body);
   window.location.href = mailtoLink;
 });
 
