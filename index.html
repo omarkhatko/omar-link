@@ -160,7 +160,7 @@
           </div>
           <div>
             <label class="block mb-1" id="label-role"></label>
-            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
+            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
           </div>
           <div class="mt-6">
             <button type="submit" class="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-slate-100 transition" id="send-btn">Send</button>
@@ -431,10 +431,10 @@ function applyTranslations(lang) {
   document.getElementById('label-name').textContent = t.labelName;
   document.getElementById('label-company').textContent = t.labelCompany;
   document.getElementById('label-role').textContent = t.labelRole;
-  document.getElementById('label-whatsapp').textContent = t.labelWhatsapp;
-  document.getElementById('label-email').textContent = t.labelEmail;
-  document.getElementById('label-message').textContent = t.labelMessage;
-  document.getElementById('send-btn').textContent = t.sendButton;
+  const emailLabel = document.getElementById('label-email');
+  if (emailLabel) emailLabel.textContent = t.labelEmail;
+  const sendBtn = document.getElementById('send-btn');
+  if (sendBtn) sendBtn.textContent = t.sendButton;
   // There is no direct contacts heading anymore.
   document.getElementById('footer-text').textContent = t.footerText;
 }
@@ -503,7 +503,7 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
   if (phone) body += 'Phone: ' + phone + '\n';
   if (email) body += 'Email: ' + email + '\n';
   if (subjectInput) body += '\nSubject: ' + subjectInput;
-  const subject = encodeURIComponent(subjectInput || 'New Request');
+  const subject = encodeURIComponent(subjectInput || 'Contact Request');
   const mailtoLink = 'mailto:omar@enlightenedminds.io?subject=' + subject + '&body=' + encodeURIComponent(body);
   window.location.href = mailtoLink;
 });
