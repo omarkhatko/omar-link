@@ -155,16 +155,12 @@
             <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
           </div>
           <div>
-            <label class="block mb-1" id="label-role"></label>
-            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
-          </div>
-          <div>
             <label class="block mb-1" id="label-email"></label>
             <input type="email" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
           </div>
           <div>
-            <label class="block mb-1" id="label-message"></label>
-            <textarea class="w-full h-24 px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700 resize-none"></textarea>
+            <label class="block mb-1" id="label-role"></label>
+            <input type="text" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
           </div>
           <div class="mt-6">
             <button type="submit" class="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-slate-100 transition" id="send-btn">Send</button>
@@ -250,7 +246,7 @@ const translations = {
     labelRole: 'Subject',
     labelWhatsapp: 'WhatsApp',
     labelEmail: 'Email',
-    labelMessage: 'What are you looking for in the circle?',
+    labelMessage: 'Subject',
     sendButton: 'Send',
     // contactDirectHeading removed as the heading is no longer displayed,
     footerText: '© ' + new Date().getFullYear() + ' Omar Khatko. All rights reserved.',
@@ -308,7 +304,7 @@ const translations = {
     labelRole: 'Тема',
     labelWhatsapp: 'WhatsApp',
     labelEmail: 'Email',
-    labelMessage: 'Что ищете в круге?',
+    labelMessage: 'Ваш запрос',
     sendButton: 'Отправить',
     // contactDirectHeading removed as the heading is no longer displayed,
     footerText: '© ' + new Date().getFullYear() + ' Омар Хатко. Все права защищены.',
@@ -366,7 +362,7 @@ const translations = {
     labelRole: 'الموضوع',
     labelWhatsapp: 'WhatsApp',
     labelEmail: 'البريد الإلكتروني',
-    labelMessage: 'ما الذي تبحث عنه في الدائرة؟',
+    labelMessage: 'طلبك',
     sendButton: 'إرسال',
     // contactDirectHeading removed as the heading is no longer displayed,
     footerText: '© ' + new Date().getFullYear() + ' عمر خاتكو. جميع الحقوق محفوظة.',
@@ -497,21 +493,17 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
   e.preventDefault();
   const form = e.target;
   const inputs = form.querySelectorAll('input');
-  const textarea = form.querySelector('textarea');
+  // Expect inputs in order: name, phone, email, subject
   const name = inputs[0] ? inputs[0].value.trim() : '';
-  // Second input is now phone number
   const phone = inputs[1] ? inputs[1].value.trim() : '';
-  // Third input is now subject
-  const subjectField = inputs[2] ? inputs[2].value.trim() : '';
-  const email = inputs.length > 3 ? inputs[3].value.trim() : '';
-  const message = textarea ? textarea.value.trim() : '';
+  const email = inputs[2] ? inputs[2].value.trim() : '';
+  const subjectInput = inputs[3] ? inputs[3].value.trim() : '';
   let body = '';
   if (name) body += 'Name: ' + name + '\n';
   if (phone) body += 'Phone: ' + phone + '\n';
   if (email) body += 'Email: ' + email + '\n';
-  if (message) body += '\n' + message;
-  // Use subject field as email subject if provided, otherwise default
-  const subject = subjectField ? encodeURIComponent(subjectField) : 'New%20Application';
+  if (subjectInput) body += '\nSubject: ' + subjectInput;
+  const subject = encodeURIComponent(subjectInput || 'New Request');
   const mailtoLink = 'mailto:omar@enlightenedminds.io?subject=' + subject + '&body=' + encodeURIComponent(body);
   window.location.href = mailtoLink;
 });
