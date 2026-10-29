@@ -146,7 +146,11 @@
       <div>
         <h2 class="text-3xl font-semibold mb-6" id="contact-heading">Contact</h2>
         <!-- Contact form posts data directly to a third‑party email service. -->
-        <form id="contact-form" class="space-y-4" action="https://formsubmit.co/omar@enlightenedminds.io" method="POST">
+        <form id="contact-form" class="space-y-4" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="fb4772f0-6085-4997-8b1f-68f015fd63d5">
+          <input type="hidden" name="subject" value="New inquiry from Omar Khatko website">
+          <input type="hidden" name="from_name" value="Omar Khatko Website">
+          <input type="checkbox" name="botcheck" style="display:none;">
           <div>
             <label class="block mb-1" id="label-name"></label>
             <!-- Each input has a name attribute so FormSubmit can include the field values in the email -->
@@ -158,16 +162,12 @@
           </div>
           <div>
             <label class="block mb-1" id="label-email"></label>
-            <input type="email" name="Email" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
+            <input type="email" name="email" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700" required>
           </div>
           <div>
             <label class="block mb-1" id="label-role"></label>
             <input type="text" name="Subject" class="w-full px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700">
           </div>
-          <!-- Hidden field to disable reCAPTCHA on the formservice -->
-          <input type="hidden" name="_captcha" value="false">
-          <!-- Optional redirect after submission -->
-          <input type="hidden" name="_next" value="https://omarkhatko.github.io/omar-link/#contact">
           <div class="mt-6">
             <button type="submit" class="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-slate-100 transition" id="send-btn">Submit</button>
           </div>
